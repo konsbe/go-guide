@@ -59,8 +59,9 @@ func AlbumsByArtist(name string) ([]types.Album, error) {
 func AlbumByID(id int64) (types.Album, error) {
     // An album to hold data from the returned row.
     var alb types.Album
-
+	// Use DB.QueryRow to execute a SELECT statement to query for an album with the specified ID.
     row := db.DB.QueryRow("SELECT * FROM album WHERE id = ?", id)
+	// Use Row.Scan to copy column values into struct fields.
     if err := row.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
         if err == sql.ErrNoRows {
             return alb, fmt.Errorf("albumsById %d: no such album", id)
@@ -73,6 +74,7 @@ func AlbumByID(id int64) (types.Album, error) {
 // AddAlbum adds the specified album to the database,
 // returning the album ID of the new entry
 func AddAlbum(alb types.Album) (int64, error) {
+	// Use DB.Exec to execute an INSERT statement.
     result, err := db.DB.Exec("INSERT INTO album (title, artist, price) VALUES (?, ?, ?)", alb.Title, alb.Artist, alb.Price)
     if err != nil {
         return 0, fmt.Errorf("addAlbum: %v", err)

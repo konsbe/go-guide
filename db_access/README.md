@@ -95,9 +95,12 @@ Then set the env vars:
 ```bash
 export DBUSER=gouser
 export DBPASS=gopassword
+```
+
+6. Run the code:
+```bash
 go run .
 
 
 Connected!
 ```
-
