@@ -1,6 +1,10 @@
 package main
 
-import "golang.org/x/tour/pic"
+import (
+	"golang.org/x/tour/pic"
+	"fmt"
+	"math"
+)
 
 func Pic(dx, dy int) [][]uint8 {
 	pic := make([][]uint8, dy) //allocate the outer slice, dy = number of rows
@@ -88,8 +92,38 @@ func WordCount(s string) map[string]int {
 
 }
 
+
+type Vertex struct {
+	X, Y float64
+}
+
+// func Abs(v Vertex) float64 {
+// 	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+// }
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+
+// func Scale(v *Vertex, f float64) {
+// 	v.X = v.X * f
+// 	v.Y = v.Y * f
+// }
+func (v *Vertex) Scale(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+	fmt.Println(v) // &{30 40}
+}
+
 func main() {
 	pic.Show(Pic)
 	pic.Show(PicRangeIteration)
 	createMap();
+
+	v := Vertex{3, 4}
+	y := Vertex{2, 5}
+	fmt.Println(v, y) // {3 4} {2 5}
+	v.Scale(10)
+	fmt.Println(v, y) // {30 40} {2 5} → v is modified, but y is not, because v is a copy of the original vertex, and the method has a pointer receiver, so it modifies the original vertex through the pointer
+	fmt.Println(v.Abs()) // 50 → the method has a value receiver, so it operates on a copy of the original vertex, and does not modify the original vertex, but it can still access the fields of the original vertex through the copy, and return the result
 }
