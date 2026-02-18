@@ -25,9 +25,9 @@ func main() {
     // which tells the http package to handle all requests to the web root ("/") with handler.
     // http.HandleFunc("/", handler)
     // We rewrite our main function to initialize http using the viewHandler to handle any requests under the path /view/.
-    http.HandleFunc("/view/", handlers.ViewHandler)
-    http.HandleFunc("/edit/", handlers.EditHandler)
-    http.HandleFunc("/save/", handlers.SaveHandler)
+    http.HandleFunc("/view/", handlers.MakeHandler(handlers.ViewHandler))
+    http.HandleFunc("/edit/", handlers.MakeHandler(handlers.EditHandler))
+    http.HandleFunc("/save/", handlers.MakeHandler(handlers.SaveHandler))
 
     // It then calls http.ListenAndServe, specifying that it should listen on port 8080 on any interface (":8080").
     // ListenAndServe always returns an error, 

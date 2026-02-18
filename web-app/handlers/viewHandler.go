@@ -16,8 +16,7 @@ import (
 // This is because it ignores the error return value from loadPage 
 // and continues to try and fill out the template with no data. Instead, 
 // if the requested Page doesn't exist, it should redirect the client to the edit Page so the content may be created:
-func ViewHandler(w http.ResponseWriter, r *http.Request) {
-    title := r.URL.Path[len("/view/"):]
+func ViewHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := utils.LoadPage(title)
     if err != nil {
         http.Redirect(w, r, "/edit/"+title, http.StatusFound)
